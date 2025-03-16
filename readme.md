@@ -32,7 +32,7 @@ Get the latest version from [GitHub Releases](https://github.com/your-username/s
 <details>
 <summary>Chrome / Edge</summary>
 
-1. Extract the downloaded `svg-to-icon-{version}-chromium.zip`
+1. Extract the downloaded `svg-to-icon-chrome-v*.zip`
 2. Navigate to `chrome://extensions` in your browser
 3. Enable "Developer mode" in the top right
 4. Click "Load unpacked"

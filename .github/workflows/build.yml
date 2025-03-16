@@ -27,15 +27,17 @@ jobs:
         
     - name: Build Chromium-based Extension
       run: |
-        mkdir -p dist/chrome
+        mkdir -p dist/chrome/icons
         cp manifest.json popup.html script.js styles.css dist/chrome/
+        cp -r icons/* dist/chrome/icons/
         cd dist/chrome
         zip -r "../svg-to-icon-chrome-${{ github.ref_name }}.zip" *
         
     - name: Build Firefox Extension
       run: |
-        mkdir -p dist/firefox
+        mkdir -p dist/firefox/icons
         cp manifest.json popup.html script.js styles.css dist/firefox/
+        cp -r icons/* dist/firefox/icons/
         cd dist/firefox
         # 添加 Firefox 特定的配置
         jq '.browser_specific_settings = {"gecko": {"id": "svg-to-icon@example.com"}}' manifest.json > manifest.tmp
