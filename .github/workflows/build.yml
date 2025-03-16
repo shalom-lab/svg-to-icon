@@ -1,0 +1,76 @@
+name: Build Browser Extensions
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g web-ext
+        
+    - name: Build Chromium-based Extension
+      run: |
+        mkdir -p dist/chrome
+        cp manifest.json popup.html script.js styles.css dist/chrome/
+        cd dist/chrome
+        zip -r "../svg-to-icon-chrome-${{ github.ref_name }}.zip" *
+        
+    - name: Build Firefox Extension
+      run: |
+        mkdir -p dist/firefox
+        cp manifest.json popup.html script.js styles.css dist/firefox/
+        cd dist/firefox
+        # 添加 Firefox 特定的配置
+        jq '.browser_specific_settings = {"gecko": {"id": "svg-to-icon@example.com"}}' manifest.json > manifest.tmp
+        mv manifest.tmp manifest.json
+        web-ext build
+        mv web-ext-artifacts/*.zip "../svg-to-icon-firefox-${{ github.ref_name }}.zip"
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          dist/svg-to-icon-chrome-${{ github.ref_name }}.zip
+          dist/svg-to-icon-firefox-${{ github.ref_name }}.zip
+        name: Release ${{ github.ref_name }}
+        body: |
+          SVG to Icon Browser Extension Release ${{ github.ref_name }}
+          
+          ### 支持的浏览器 Supported Browsers:
+          - Chrome
+          - Edge
+          - Firefox
+          
+          ### 安装说明 Installation:
+          
+          #### Chromium-based (Chrome/Edge):
+          1. 解压 chromium.zip
+          2. 访问 chrome://extensions
+          3. 开启"开发者模式"
+          4. 点击"加载已解压的扩展程序"
+          5. 选择解压后的文件夹
+          
+          #### Firefox:
+          1. 访问 about:debugging
+          2. 点击"临时载入附加组件"
+          3. 选择 firefox.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

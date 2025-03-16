@@ -1,0 +1,11 @@
+{
+    "name": "svg-to-icon",
+    "version": "1.0.0",
+    "description": "Convert SVG to various icon sizes",
+    "scripts": {
+        "build:chrome": "mkdir -p dist/chrome && cp -r manifest.json popup.html script.js styles.css dist/chrome/",
+        "build:firefox": "mkdir -p dist/firefox && cp -r manifest.json popup.html script.js styles.css dist/firefox/"
+    },
+    "author": "",
+    "license": "MIT"
+}

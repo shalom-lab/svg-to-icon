@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SVG to Icon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SVG to Icon</h1>
+        <div class="input-section">
+            <div class="section-header">
+                <h3>SVG Input</h3>
+                <div class="upload-area">
+                    <input type="file" id="fileInput" class="file-input" accept=".svg">
+                    <button class="upload-button" id="uploadButton">Upload SVG</button>
+                </div>
+            </div>
+            <textarea id="svgInput" placeholder="Paste your SVG code here..."></textarea>
+        </div>
+        <div>
+            <h3>Icon Sizes:</h3>
+            <input type="text" id="sizeInput" class="size-input" value="16,48,128" placeholder="Enter sizes separated by commas (e.g., 16,48,128)">
+        </div>
+        <button id="convertButton">Generate Icons</button>
+        <div class="preview" id="preview"></div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html> 

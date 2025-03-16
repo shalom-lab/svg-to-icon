@@ -1,0 +1,143 @@
+body {
+    width: 500px;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #f5f8ff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.input-section {
+    border: 1px solid #E3F2FD;
+    border-radius: 4px;
+    background-color: white;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.section-header h3 {
+    margin: 0;
+    flex: 1;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 8px;
+    border: 1px solid #E3F2FD;
+    border-radius: 4px;
+    background-color: white;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+.size-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #E3F2FD;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.preview {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.preview-item {
+    border: 1px solid #2196F3;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
+}
+
+.preview-item canvas {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background: #1976D2;
+}
+
+h1 {
+    color: #1565C0;
+    text-align: center;
+    margin: 0 0 5px 0;
+}
+
+h3 {
+    color: #1976D2;
+    margin: 0 0 8px 0;
+}
+
+.toast {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background-color: #323232;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+.upload-area {
+    display: flex;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-button {
+    padding: 8px 15px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.upload-button:hover {
+    background: #1976D2;
+} 
