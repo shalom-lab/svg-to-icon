@@ -12,6 +12,10 @@
   </p>
 </div>
 
+## 💻 Interface
+
+![interface](./images/screenshot.png)
+
 ## ✨ Features
 
 - 🚀 Quick SVG to multi-size icon conversion
@@ -49,6 +53,8 @@ Get the latest version from [GitHub Releases](https://github.com/your-username/s
 4. Select the downloaded `svg-to-icon-{version}-firefox.zip`
 
 </details>
+
+![promo](./images/promo-large.png)
 
 ## 🚀 How to Use
 

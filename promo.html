@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SVG to Icon Promo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        
+        .small-promo {
+            width: 440px;
+            height: 280px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .large-promo {
+            width: 1400px;
+            height: 560px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .icon-container {
+            margin-bottom: 20px;
+        }
+        
+        .icon {
+            width: 64px;
+            height: 64px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+        
+        .large-promo .icon {
+            width: 96px;
+            height: 96px;
+        }
+        
+        .text-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+        }
+        
+        .large-promo h1 {
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+        }
+        
+        .tagline {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .large-promo .tagline {
+            font-size: 1.6em;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px auto;
+            max-width: 1000px;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            flex: 1;
+            min-width: 200px;
+            transition: transform 0.2s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+        
+        .feature h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+        
+        .feature p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .decoration {
+            position: absolute;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .dec1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .dec2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            opacity: 0.5;
+        }
+        
+        .formats {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .format {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: background 0.2s ease;
+        }
+        
+        .format:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <!-- 小型宣传图 -->
+    <div class="small-promo">
+        <div class="content">
+            <div class="icon-container">
+                <img src="icons/icon128.png" alt="SVG to Icon" class="icon">
+            </div>
+            <div class="text-content">
+                <h1>SVG to Icon</h1>
+                <div class="tagline">Convert SVG to Multi-size Icons</div>
+                <div class="formats">
+                    <span class="format">PNG</span>
+                    <span class="format">ICO</span>
+                    <span class="format">FAVICON</span>
+                </div>
+            </div>
+        </div>
+        <div class="decoration dec1"></div>
+        <div class="decoration dec2"></div>
+    </div>
+    
+    <!-- 大型宣传图 -->
+    <div class="large-promo">
+        <div class="content">
+            <div class="icon-container">
+                <img src="icons/icon128.png" alt="SVG to Icon" class="icon">
+            </div>
+            <div class="text-content">
+                <h1>SVG to Icon</h1>
+                <div class="tagline">One-Click Icon Generation</div>
+                <div class="features">
+                    <div class="feature">
+                        <h3>🎯 Multi-size Export</h3>
+                        <p>Generate icons in various sizes</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🚀 Batch Processing</h3>
+                        <p>Convert multiple sizes at once</p>
+                    </div>
+                    <div class="feature">
+                        <h3>👁️ Live Preview</h3>
+                        <p>Real-time icon preview</p>
+                    </div>
+                </div>
+                <div class="formats">
+                    <span class="format">PNG</span>
+                    <span class="format">ICO</span>
+                    <span class="format">FAVICON</span>
+                    <span class="format">APP ICON</span>
+                    <span class="format">EXTENSION ICON</span>
+                </div>
+            </div>
+        </div>
+        <div class="decoration dec1"></div>
+        <div class="decoration dec2"></div>
+    </div>
+</body>
+</html> 
