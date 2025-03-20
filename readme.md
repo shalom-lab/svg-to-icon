@@ -11,9 +11,9 @@
     </a>
   </p>
 </div>
- <p align="center">
-    <a href="#readme">English</a> | <a href="readme_zh.md">中文</a>
-  </p>   
+<p align="center">
+  <a href="#readme">English</a> | <a href="readme_zh.md">中文</a>
+</p>   
 
 ## 💻 Interface
 
