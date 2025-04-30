@@ -9,11 +9,15 @@
     <a href="LICENSE">
       <img src="https://img.shields.io/github/license/your-username/svg-to-icon?style=flat-square" alt="License">
     </a>
+    <a href="https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk">
+      <img src="https://img.shields.io/chrome-web-store/v/eeciepimabplbolbjbpellekfbljhbgk?style=flat-square" alt="Chrome Web Store">
+    </a>
   </p>
 </div>
 <p align="center">
-  <a href="#readme">English</a> | <a href="readme_zh.md">中文</a>
+  <a href="readme.md">English</a> | <a href="#readme">中文</a>
 </p>  
+
 ## 💻 界面
 
 ![interface](./images/screenshot.png)
@@ -29,16 +33,24 @@
 ## 📥 安装
 
 ### 下载
-从 [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest) 页面下载最新版本：
-- Chrome/Edge 用户：下载 `svg-to-icon-chrome-v*.zip`
-- Firefox 用户：下载 `svg-to-icon-firefox-v*.zip`
+从以下位置获取最新版本：
+- [Chrome 网上应用店](https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk)（推荐）
+- [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest)：
+  - Chrome/Edge 用户：下载 `svg-to-icon-chrome-v*.zip`
+  - Firefox 用户：下载 `svg-to-icon-firefox-v*.zip`
 
 ### 安装步骤
 
 <details>
 <summary>Chrome / Edge</summary>
 
-1. 解压下载的 `svg-to-icon-{version}-chromium.zip`
+#### 从 Chrome 网上应用店安装（推荐）
+1. 点击上面的 Chrome 网上应用店链接
+2. 点击"添加到 Chrome"按钮
+3. 确认安装
+
+#### 从 GitHub 手动安装
+1. 解压下载的 `svg-to-icon-chrome-v*.zip`
 2. 在浏览器地址栏输入 `chrome://extensions`
 3. 开启右上角的"开发者模式"
 4. 点击"加载已解压的扩展程序"
@@ -52,7 +64,7 @@
 1. 在浏览器地址栏输入 `about:debugging`
 2. 点击"此 Firefox"
 3. 点击"临时载入附加组件"
-4. 选择下载的 `svg-to-icon-{version}-firefox.zip`
+4. 选择下载的 `svg-to-icon-firefox-v*.zip`
 
 </details>
 

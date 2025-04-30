@@ -30,9 +30,11 @@
 ## 📥 Installation
 
 ### Download
-Get the latest version from [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest):
-- Chrome/Edge users: Download `svg-to-icon-chrome-v*.zip`
-- Firefox users: Download `svg-to-icon-firefox-v*.zip`
+Get the latest version from:
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk) (Recommended)
+- [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest):
+  - Chrome/Edge users: Download `svg-to-icon-chrome-v*.zip`
+  - Firefox users: Download `svg-to-icon-firefox-v*.zip`
 
 ### Installation Steps
 
