@@ -77,6 +77,41 @@ function convertSVG() {
         img.src = url;
         previewContainer.appendChild(previewItem);
     });
+
+    // Add logo.svg preview and download (always available, independent of sizes)
+    const svgPreviewItem = document.createElement('div');
+    svgPreviewItem.className = 'preview-item';
+
+    const svgLabel = document.createElement('div');
+    svgLabel.textContent = 'logo.svg';
+    svgLabel.style.marginBottom = '5px';
+
+    const svgPreview = document.createElement('img');
+    const svgBlob = new Blob([svgText], {type: 'image/svg+xml'});
+    const svgUrl = URL.createObjectURL(svgBlob);
+    svgPreview.src = svgUrl;
+    svgPreview.style.maxWidth = '128px';
+    svgPreview.style.maxHeight = '128px';
+    svgPreview.style.border = '1px solid #ccc';
+    svgPreview.style.borderRadius = '4px';
+
+    const svgDownloadBtn = document.createElement('button');
+    svgDownloadBtn.textContent = 'Download';
+    svgDownloadBtn.onclick = () => {
+        const blob = new Blob([svgText], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'logo.svg';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    svgPreviewItem.appendChild(svgLabel);
+    svgPreviewItem.appendChild(svgPreview);
+    svgPreviewItem.appendChild(document.createElement('br'));
+    svgPreviewItem.appendChild(svgDownloadBtn);
+    previewContainer.appendChild(svgPreviewItem);
 }
 
 function handleFileUpload(file) {
@@ -99,11 +134,52 @@ function handleFileUpload(file) {
     reader.readAsText(file);
 }
 
+// 保存数据到本地存储
+function saveData() {
+    const svgText = document.getElementById('svgInput').value;
+    const sizeInput = document.getElementById('sizeInput').value;
+    
+    try {
+        localStorage.setItem('svgInput', svgText);
+        localStorage.setItem('sizeInput', sizeInput);
+    } catch (e) {
+        // 如果 localStorage 不可用，静默失败
+        console.warn('localStorage not available:', e);
+    }
+}
+
+// 从本地存储恢复数据
+function loadData() {
+    try {
+        const svgText = localStorage.getItem('svgInput');
+        const sizeInput = localStorage.getItem('sizeInput');
+        
+        if (svgText) {
+            document.getElementById('svgInput').value = svgText;
+        }
+        if (sizeInput) {
+            document.getElementById('sizeInput').value = sizeInput;
+        }
+    } catch (e) {
+        // 如果 localStorage 不可用，静默失败
+        console.warn('localStorage not available:', e);
+    }
+}
+
 // Add event listener when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const convertButton = document.getElementById('convertButton');
     const fileInput = document.getElementById('fileInput');
     const uploadButton = document.getElementById('uploadButton');
+    const svgInput = document.getElementById('svgInput');
+    const sizeInput = document.getElementById('sizeInput');
+
+    // 加载保存的数据
+    loadData();
+
+    // 监听输入变化，实时保存
+    svgInput.addEventListener('input', saveData);
+    sizeInput.addEventListener('input', saveData);
 
     convertButton.addEventListener('click', convertSVG);
 
@@ -118,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFileUpload(file);
         // Reset file input so the same file can be selected again
         fileInput.value = '';
+        // 文件上传后会自动更新 textarea，触发 input 事件，所以会自动保存
     });
 
     // Handle drag and drop
@@ -137,5 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
         textarea.style.borderColor = '#2196F3';
         const file = e.dataTransfer.files[0];
         handleFileUpload(file);
+        // 拖拽上传后会自动更新 textarea，触发 input 事件，所以会自动保存
     });
 }); 

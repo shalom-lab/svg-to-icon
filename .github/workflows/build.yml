@@ -24,6 +24,22 @@ jobs:
       run: |
         npm install
         npm install -g web-ext
+        sudo apt-get update && sudo apt-get install -y jq
+        
+    - name: Extract version from tag
+      id: version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Extracted version: $VERSION"
+        
+    - name: Update manifest.json version
+      run: |
+        VERSION="${{ steps.version.outputs.version }}"
+        jq --arg version "$VERSION" '.version = $version' manifest.json > manifest.tmp
+        mv manifest.tmp manifest.json
+        echo "Updated manifest.json version to: $VERSION"
+        cat manifest.json
         
     - name: Build Chromium-based Extension
       run: |
@@ -44,6 +60,13 @@ jobs:
         mv manifest.tmp manifest.json
         web-ext build
         mv web-ext-artifacts/*.zip "../svg-to-icon-firefox-${{ github.ref_name }}.zip"
+        
+    - name: Upload Chrome extension artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: chrome-extension
+        path: dist/svg-to-icon-chrome-${{ github.ref_name }}.zip
+        retention-days: 30
         
     - name: Create Release
       uses: softprops/action-gh-release@v1
