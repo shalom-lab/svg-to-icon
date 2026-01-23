@@ -62,7 +62,7 @@ jobs:
         mv web-ext-artifacts/*.zip "../svg-to-icon-firefox-${{ github.ref_name }}.zip"
         
     - name: Upload Chrome extension artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: chrome-extension
         path: dist/svg-to-icon-chrome-${{ github.ref_name }}.zip
