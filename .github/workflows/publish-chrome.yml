@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -47,9 +47,9 @@ jobs:
         run: git checkout "${{ steps.meta.outputs.tag }}"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install dependencies
         run: |
@@ -100,10 +100,7 @@ jobs:
             exit 1
           fi
 
-          npx --yes chrome-webstore-upload-cli@3 upload \
-            --extension-id "$EXTENSION_ID" \
-            --client-id "$CLIENT_ID" \
-            --client-secret "$CLIENT_SECRET" \
-            --refresh-token "$REFRESH_TOKEN" \
+          # No subcommand = upload + publish. Version must be higher than the live store version.
+          npx --yes chrome-webstore-upload-cli@3 \
             --source "dist/chrome-extension.zip" \
-            --auto-publish
+            --extension-id "$EXTENSION_ID"
