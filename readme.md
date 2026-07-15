@@ -3,11 +3,11 @@
   <p><em>A browser extension to effortlessly convert SVG into multi-size icons</em></p>
 
   <p>
-    <a href="https://github.com/your-username/svg-to-icon/releases/latest">
-      <img src="https://img.shields.io/github/v/release/your-username/svg-to-icon?include_prereleases&style=flat-square" alt="GitHub release">
+    <a href="https://github.com/shalom-lab/svg-to-icon/releases/latest">
+      <img src="https://img.shields.io/github/v/release/shalom-lab/svg-to-icon?include_prereleases&style=flat-square" alt="GitHub release">
     </a>
     <a href="LICENSE">
-      <img src="https://img.shields.io/github/license/your-username/svg-to-icon?style=flat-square" alt="License">
+      <img src="https://img.shields.io/github/license/shalom-lab/svg-to-icon?style=flat-square" alt="License">
     </a>
   </p>
 </div>
@@ -32,7 +32,7 @@
 ### Download
 Get the latest version from:
 - [Chrome Web Store](https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk) (Recommended)
-- [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest):
+- [GitHub Releases](https://github.com/shalom-lab/svg-to-icon/releases/latest):
   - Chrome/Edge users: Download `svg-to-icon-chrome-v*.zip`
   - Firefox users: Download `svg-to-icon-firefox-v*.zip`
 

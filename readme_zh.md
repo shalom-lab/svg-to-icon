@@ -3,11 +3,11 @@
   <p><em>轻松将 SVG 转换为多尺寸图标的浏览器扩展</em></p>
 
   <p>
-    <a href="https://github.com/your-username/svg-to-icon/releases/latest">
-      <img src="https://img.shields.io/github/v/release/your-username/svg-to-icon?include_prereleases&style=flat-square" alt="GitHub release">
+    <a href="https://github.com/shalom-lab/svg-to-icon/releases/latest">
+      <img src="https://img.shields.io/github/v/release/shalom-lab/svg-to-icon?include_prereleases&style=flat-square" alt="GitHub release">
     </a>
     <a href="LICENSE">
-      <img src="https://img.shields.io/github/license/your-username/svg-to-icon?style=flat-square" alt="License">
+      <img src="https://img.shields.io/github/license/shalom-lab/svg-to-icon?style=flat-square" alt="License">
     </a>
     <a href="https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk">
       <img src="https://img.shields.io/chrome-web-store/v/eeciepimabplbolbjbpellekfbljhbgk?style=flat-square" alt="Chrome Web Store">
@@ -35,7 +35,7 @@
 ### 下载
 从以下位置获取最新版本：
 - [Chrome 网上应用店](https://chrome.google.com/webstore/detail/svg-to-icon/eeciepimabplbolbjbpellekfbljhbgk)（推荐）
-- [GitHub Releases](https://github.com/your-username/svg-to-icon/releases/latest)：
+- [GitHub Releases](https://github.com/shalom-lab/svg-to-icon/releases/latest)：
   - Chrome/Edge 用户：下载 `svg-to-icon-chrome-v*.zip`
   - Firefox 用户：下载 `svg-to-icon-firefox-v*.zip`
 
