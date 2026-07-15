@@ -1,98 +1,113 @@
 name: Publish to Chrome Web Store
 
 on:
+  push:
+    tags:
+      - "v*"
+  # 手动触发：把某个已发布的 tag 版本推到商店（默认取最新 v* tag）
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag version (e.g., v1.0.3)'
-        required: true
-        type: string
 
 permissions:
   contents: read
 
 jobs:
   publish:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout default branch
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        
-    - name: Validate tag exists
-      run: |
-        TAG="${{ inputs.tag }}"
-        if [ -z "$TAG" ]; then
-          echo "Error: Tag is required"
-          exit 1
-        fi
-        
-        echo "Checking if tag $TAG exists..."
-        
-        # 获取所有远程 tags
-        git fetch --tags
-        
-        # 检查 tag 是否存在
-        if git rev-parse "$TAG" >/dev/null 2>&1; then
-          echo "✓ Tag $TAG exists"
-        else
-          echo "✗ Error: Tag $TAG does not exist"
-          echo ""
-          echo "Available tags:"
-          git tag -l | tail -10
-          exit 1
-        fi
-        
-    - name: Checkout code from tag
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ inputs.tag }}
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        
-    - name: Install dependencies
-      run: |
-        npm install
-        sudo apt-get update && sudo apt-get install -y jq
-        
-    - name: Extract version from tag
-      id: version
-      run: |
-        TAG="${{ inputs.tag }}"
-        VERSION=${TAG#v}
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Extracted version: $VERSION from tag: $TAG"
-        
-    - name: Update manifest.json version
-      run: |
-        VERSION="${{ steps.version.outputs.version }}"
-        jq --arg version "$VERSION" '.version = $version' manifest.json > manifest.tmp
-        mv manifest.tmp manifest.json
-        echo "Updated manifest.json version to: $VERSION"
-        cat manifest.json
-        
-    - name: Build Chrome Extension
-      run: |
-        mkdir -p dist/chrome/icons
-        cp manifest.json popup.html script.js styles.css dist/chrome/
-        cp -r icons/* dist/chrome/icons/
-        cd dist/chrome
-        zip -r "../chrome-extension.zip" *
-        cd ..
-        ls -lh chrome-extension.zip
-        
-    - name: Publish to Chrome Web Store
-      uses: FoxyDoxy/chrome-web-store-upload@v1.0.0
-      with:
-        extension-id: 'eeciepimabplbolbjbpellekfbljhbgk'
-        client-id: ${{ secrets.CHROME_WEB_STORE_CLIENT_ID }}
-        client-secret: ${{ secrets.CHROME_WEB_STORE_CLIENT_SECRET }}
-        refresh-token: ${{ secrets.CHROME_WEB_STORE_REFRESH_TOKEN }}
-        zip-file: 'dist/chrome-extension.zip'
-        publish: true
 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve tag and version
+        id: meta
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${GITHUB_REF_NAME}"
+          else
+            TAG=$(git describe --tags --abbrev=0 --match "v*")
+          fi
+
+          VERSION="${TAG#v}"
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid tag '${TAG}'. Use semver tags like v1.2.3"
+            exit 1
+          fi
+
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Using tag: ${TAG} → version: ${VERSION}"
+
+      - name: Checkout tag
+        if: github.event_name == 'workflow_dispatch'
+        run: git checkout "${{ steps.meta.outputs.tag }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Sync manifest.json version
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          jq --arg version "$VERSION" '.version = $version' manifest.json > manifest.tmp
+          mv manifest.tmp manifest.json
+          echo "Updated manifest.json version to: $VERSION"
+          cat manifest.json
+
+      - name: Build and package extension
+        run: |
+          mkdir -p dist/chrome/icons
+          cp manifest.json popup.html script.js styles.css dist/chrome/
+          cp -r icons/* dist/chrome/icons/
+          cd dist/chrome
+          zip -r "../chrome-extension.zip" *
+          cd ..
+          ls -lh chrome-extension.zip
+
+      - name: Verify manifest version
+        run: |
+          node --input-type=module -e "
+          import fs from 'node:fs';
+          const expected = '${{ steps.meta.outputs.version }}';
+          const manifest = JSON.parse(
+            fs.readFileSync('dist/chrome/manifest.json', 'utf8')
+          );
+          if (manifest.version !== expected) {
+            console.error(\`manifest.version=\${manifest.version}, expected=\${expected}\`);
+            process.exit(1);
+          }
+          console.log('manifest.version OK:', manifest.version);
+          "
+
+      - name: Upload to Chrome Web Store
+        env:
+          EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CHROME_WEB_STORE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_WEB_STORE_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_WEB_STORE_REFRESH_TOKEN }}
+        run: |
+          if [ -z "$EXTENSION_ID" ]; then
+            EXTENSION_ID="eeciepimabplbolbjbpellekfbljhbgk"
+          fi
+
+          if [ -z "$CLIENT_ID" ] || [ -z "$CLIENT_SECRET" ] || [ -z "$REFRESH_TOKEN" ]; then
+            echo "::error::Missing Chrome Web Store secrets. Configure CHROME_WEB_STORE_CLIENT_ID, CHROME_WEB_STORE_CLIENT_SECRET, and CHROME_WEB_STORE_REFRESH_TOKEN."
+            exit 1
+          fi
+
+          npx --yes chrome-webstore-upload-cli@3 upload \
+            --extension-id "$EXTENSION_ID" \
+            --client-id "$CLIENT_ID" \
+            --client-secret "$CLIENT_SECRET" \
+            --refresh-token "$REFRESH_TOKEN" \
+            --source "dist/chrome-extension.zip" \
+            --auto-publish

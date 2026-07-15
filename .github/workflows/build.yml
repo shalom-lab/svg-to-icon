@@ -26,16 +26,25 @@ jobs:
         npm install -g web-ext
         sudo apt-get update && sudo apt-get install -y jq
         
-    - name: Extract version from tag
-      id: version
+    - name: Resolve tag and version
+      id: meta
+      shell: bash
       run: |
-        VERSION=${GITHUB_REF#refs/tags/v}
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Extracted version: $VERSION"
-        
+        TAG="${GITHUB_REF_NAME}"
+        VERSION="${TAG#v}"
+
+        if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+          echo "::error::Invalid tag '${TAG}'. Use semver tags like v1.2.3"
+          exit 1
+        fi
+
+        echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+        echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+        echo "Using tag: ${TAG} → version: ${VERSION}"
+
     - name: Update manifest.json version
       run: |
-        VERSION="${{ steps.version.outputs.version }}"
+        VERSION="${{ steps.meta.outputs.version }}"
         jq --arg version "$VERSION" '.version = $version' manifest.json > manifest.tmp
         mv manifest.tmp manifest.json
         echo "Updated manifest.json version to: $VERSION"
